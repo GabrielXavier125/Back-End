@@ -1,0 +1,50 @@
+* Formativa 3
+React
+Svelte
+Vue
+Livewire
+Framework
+Pest
+PhpUnit
+
+
+*Realizar a criação de um campo no banco de dados
+*Traduzir o site para português
+*Acrescentar um novo campo para input no campo de login
+
+
+
+## Frameworks e bibliotecas no desenvolvimento web
+
+No desenvolvimento web moderno, os frameworks surgem para facilitar a criação de aplicações, organizando o código, padronizando práticas e aumentando a produtividade. Em vez de o programador resolver todos os problemas do zero, ele utiliza ferramentas que já trazem soluções prontas para tarefas comuns, como atualização de telas, comunicação com o servidor e testes.
+
+---
+
+## React, Vue, Svelte e Livewire
+
+O **React** é uma biblioteca JavaScript focada na criação de interfaces de usuário. Ele funciona a partir do conceito de **componentes**, que são pequenas partes reutilizáveis da interface. Quando algum dado muda, o React atualiza apenas o que for necessário na tela usando o chamado **Virtual DOM**, o que melhora o desempenho. Apesar de ser muito poderoso, o React exige mais conhecimento de JavaScript e conceitos como estado, propriedades e ciclos de vida. Por isso, sua curva de aprendizado costuma ser maior, mas ele é extremamente valorizado no mercado de trabalho.
+
+O **Vue.js** foi criado com a proposta de ser mais simples e acessível. Ele também trabalha com componentes e Virtual DOM, porém sua estrutura se parece mais com o HTML tradicional, o que facilita a vida de quem já conhece front-end básico. O Vue permite que o desenvolvedor use apenas o necessário do framework, tornando-o flexível para projetos pequenos ou médios. Em comparação com o React, ele costuma ser mais fácil de aprender, embora tenha menor presença no mercado brasileiro.
+
+Já o **Svelte** adota uma abordagem diferente. Em vez de rodar um framework pesado no navegador, o Svelte **compila o código durante o desenvolvimento**, gerando JavaScript puro e otimizado. Isso elimina a necessidade de Virtual DOM e resulta em aplicações mais rápidas e leves. Além disso, o código fica mais simples e direto. Por outro lado, o Svelte ainda possui uma comunidade menor e menos oportunidades de trabalho, sendo mais indicado para projetos modernos ou experimentais.
+
+O **Livewire** se diferencia bastante dos anteriores. Ele é um framework full-stack que funciona dentro do Laravel e permite criar interfaces dinâmicas **usando PHP**, sem a necessidade de escrever muito JavaScript. O Livewire mantém a tela atualizada através de requisições automáticas ao servidor, simulando o comportamento de aplicações modernas. Essa abordagem é excelente para sistemas administrativos, formulários e CRUDs, especialmente para quem já trabalha com PHP. No entanto, ele não é considerado uma SPA completa como React ou Vue.
+
+---
+
+## Frameworks de testes: PHPUnit e Pest
+
+No back-end, testar o código é fundamental para garantir que as funcionalidades continuem funcionando mesmo após alterações. Em PHP, o framework mais tradicional para isso é o **PHPUnit**. Ele permite criar testes automatizados que verificam se um determinado método ou função retorna o resultado esperado. O PHPUnit é extremamente confiável e amplamente utilizado em projetos profissionais, porém seu estilo é mais verboso e pode parecer complexo para iniciantes.
+
+O **Pest PHP** surge como uma alternativa mais moderna e simples. Ele utiliza o PHPUnit por baixo dos panos, mas oferece uma sintaxe mais limpa e legível. Isso torna os testes mais fáceis de escrever e entender, principalmente em projetos Laravel. Para quem está aprendendo, o Pest costuma ser mais amigável e menos intimidador.
+
+---
+
+## Comparação geral e conclusão
+
+De forma geral, frameworks como React, Vue e Svelte são focados no **front-end**, ou seja, na experiência do usuário e na interação com a interface. Eles utilizam JavaScript e rodam principalmente no navegador. Já o Livewire atua como uma ponte entre front-end e back-end, permitindo criar interfaces dinâmicas diretamente no servidor com PHP.
+
+Em relação aos testes, o PHPUnit representa a abordagem clássica e robusta, enquanto o Pest prioriza simplicidade e produtividade. Ambos são importantes, e a escolha depende do contexto do projeto e do nível de experiência do desenvolvedor.
+
+Para fins de estudo, é importante entender que **não existe framework melhor ou pior**, mas sim o mais adequado para cada cenário. Compreender essas diferenças ajuda o estudante a escolher a ferramenta certa e a entender melhor como funcionam as aplicações web modernas.
+
