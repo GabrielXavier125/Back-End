@@ -14,7 +14,20 @@ Route::get('/', function () {
 
 Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
 
+// Rotas para estrutura de clientes para cadastro, edição e exclusão
+// Rota para mostrar o formulário
+Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
+// Rota para receber os dados e salvar no banco
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+// Rota para mostrar o formulário de edição
+Route::get('/clientes/{id}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+// Rota para receber os dados atualizados e salvar no banco
+Route::put('/clientes/{id}', [ClienteController::class, 'update'])->name('clientes.update');
+// Rota para excluir um cliente
+Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
+
 // additional resource listings
+Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
 Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('fornecedores.index');
 Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.index');
 Route::get('/estoques', [EstoqueController::class, 'index'])->name('estoques.index');
