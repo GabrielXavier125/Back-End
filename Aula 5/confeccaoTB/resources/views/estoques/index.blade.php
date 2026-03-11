@@ -4,11 +4,23 @@
             <h2 class="font-bold text-2xl text-gray-800">
                 🧮 {{ __('Estoque') }}
             </h2>
+
+            <a href="{{ route('estoques.create') }}" class="ml-auto inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition duration-150">
+                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                {{ __('Novo Item de Estoque') }}
+            </a>
         </div>
     </x-slot>
 
     <div class="py-10 bg-gray-100 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            @if(session('success'))
+                <div class="js-success-alert mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Sucesso!</strong>
+                    <span class="block sm:inline"> {{ session('success') }}</span>
+                </div>
+            @endif
 
             <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
 
@@ -31,7 +43,9 @@
                                 <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     Quantidade
                                 </th>
-                            </tr>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    Ações
+                                </th>
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -49,6 +63,20 @@
 
                                     <td class="px-6 py-4 text-gray-600">
                                         {{ $estoque->quantidade }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <a href="{{ route('estoques.edit', $estoque->id) }}" class="inline-flex items-center text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition">Editar</a>
+                                            <form id="form-del-estoque-{{ $estoque->id }}" method="POST" action="{{ route('estoques.destroy', $estoque->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button"
+                                                    data-delete-form="form-del-estoque-{{ $estoque->id }}"
+                                                    data-delete-info="{{ json_encode(['Produto' => $estoque->produto->nome ?? '-', 'Quantidade' => $estoque->quantidade . ' unidades']) }}"
+                                                    class="inline-flex items-center text-sm font-semibold bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg transition">Excluir</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

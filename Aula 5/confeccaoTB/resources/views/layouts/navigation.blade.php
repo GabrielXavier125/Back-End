@@ -15,11 +15,27 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.*')">
+                        {{ __('Clientes') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('fornecedores.index')" :active="request()->routeIs('fornecedores.*')">
+                        {{ __('Fornecedores') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('produtos.index')" :active="request()->routeIs('produtos.*')">
+                        {{ __('Produtos') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('estoques.index')" :active="request()->routeIs('estoques.*')">
+                        {{ __('Estoque') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pedidos.index')" :active="request()->routeIs('pedidos.*')">
+                        {{ __('Pedidos') }}
+                    </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @auth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -50,6 +66,11 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
+                @endauth
+                @guest
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900">{{ __('Log In') }}</a>
+                <a href="{{ route('register') }}" class="text-sm text-gray-700 hover:text-gray-900 ms-4">{{ __('Register') }}</a>
+                @endguest
             </div>
 
             <!-- Hamburger -->
@@ -70,10 +91,26 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.*')">
+                {{ __('Clientes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('fornecedores.index')" :active="request()->routeIs('fornecedores.*')">
+                {{ __('Fornecedores') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('produtos.index')" :active="request()->routeIs('produtos.*')">
+                {{ __('Produtos') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('estoques.index')" :active="request()->routeIs('estoques.*')">
+                {{ __('Estoque') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('pedidos.index')" :active="request()->routeIs('pedidos.*')">
+                {{ __('Pedidos') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
+            @auth
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
@@ -95,6 +132,13 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+            @endauth
+            @guest
+            <div class="px-4 py-2">
+                <a href="{{ route('login') }}" class="block text-sm text-gray-700 hover:text-gray-900">{{ __('Log In') }}</a>
+                <a href="{{ route('register') }}" class="block text-sm text-gray-700 hover:text-gray-900 mt-2">{{ __('Register') }}</a>
+            </div>
+            @endguest
         </div>
     </div>
 </nav>

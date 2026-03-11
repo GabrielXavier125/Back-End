@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center">
             <h2 class="font-bold text-2xl text-gray-800">
-                👥 {{ __('Cadastrar Novo Cliente') }}
+                🏭 {{ __('Cadastrar Novo Fornecedor') }}
             </h2>
         </div>
     </x-slot>
@@ -12,15 +12,15 @@
             <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
                 <div class="p-6 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-700">
-                        Cadastro de Cliente
+                        Cadastro de Fornecedor
                     </h3>
                     <div class="mt-2 text-sm text-gray-500">
-                        <a href="{{ route('clientes.index') }}" class="text-indigo-600 hover:text-indigo-900">&larr; Voltar à lista</a>
+                        <a href="{{ route('fornecedores.index') }}" class="text-indigo-600 hover:text-indigo-900">&larr; Voltar a lista</a>
                     </div>
                 </div>
 
                 <div class="p-6">
-                    <form method="POST" action="{{ route('clientes.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('fornecedores.store') }}" class="space-y-6">
                         @csrf
 
                         <div>
@@ -42,13 +42,13 @@
                         </div>
 
                         <div>
-                            <x-input-label for="cpf" :value="__('CPF')" />
-                            <x-text-input id="cpf" name="cpf" type="text" class="mt-1 block w-full" :value="old('cpf')" />
-                            <x-input-error class="mt-2" :messages="$errors->get('cpf')" />
+                            <x-input-label for="cnpj" :value="__('CNPJ')" />
+                            <x-text-input id="cnpj" name="cnpj" type="text" class="mt-1 block w-full" :value="old('cnpj')" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('cnpj')" />
                         </div>
 
                         <div>
-                            <x-input-label for="endereco" :value="__('Endereço')" />
+                            <x-input-label for="endereco" :value="__('Endereco')" />
                             <x-text-input id="endereco" name="endereco" type="text" class="mt-1 block w-full" :value="old('endereco')" />
                             <x-input-error class="mt-2" :messages="$errors->get('endereco')" />
                         </div>
