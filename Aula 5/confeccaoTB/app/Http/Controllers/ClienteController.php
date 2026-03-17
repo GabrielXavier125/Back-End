@@ -8,9 +8,36 @@ use Illuminate\Validation\Rule;
 
 class ClienteController extends Controller
 {
-    public function index() {
-        $clientes = Clientes::all();
-        return view('clientes.index', compact('clientes'));
+    public function index(Request $request) {
+        $telefone = $this->onlyDigits($request->input('telefone'));
+        $cpf = $this->onlyDigits($request->input('cpf'));
+
+        $clientes = Clientes::query()
+            ->when($request->filled('nome'), function ($query) use ($request) {
+                $query->where('nome', 'like', '%' . $request->input('nome') . '%');
+            })
+            ->when($request->filled('email'), function ($query) use ($request) {
+                $query->where('email', 'like', '%' . $request->input('email') . '%');
+            })
+            ->when($telefone, function ($query) use ($telefone) {
+                $query->where('telefone', 'like', '%' . $telefone . '%');
+            })
+            ->when($cpf, function ($query) use ($cpf) {
+                $query->where('cpf', 'like', '%' . $cpf . '%');
+            })
+            ->orderBy('nome')
+            ->get();
+
+        $filtros = [
+            'nome' => $request->input('nome', ''),
+            'email' => $request->input('email', ''),
+            'telefone' => $request->input('telefone', ''),
+            'cpf' => $request->input('cpf', ''),
+        ];
+
+        $filtrosAtivos = collect($filtros)->contains(fn ($value) => filled($value));
+
+        return view('clientes.index', compact('clientes', 'filtros', 'filtrosAtivos'));
     }
 
     // Exibe o formulario de cadastro
@@ -22,13 +49,18 @@ class ClienteController extends Controller
     // Recebe os dados do formulario e salva no banco
     public function store(Request $request)
     {
+        $request->merge([
+            'telefone' => $this->onlyDigits($request->input('telefone')),
+            'cpf' => $this->onlyDigits($request->input('cpf')),
+        ]);
+
         // Validação dos dados
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:clientes,email',
-            'telefone' => 'required|string|max:20',
+            'telefone' => 'required|digits_between:10,11',
             'endereco' => 'required|string|max:255',
-            'cpf' => 'required|string|max:14|unique:clientes,cpf',
+            'cpf' => 'required|digits:11|unique:clientes,cpf',
         ]);
 
         // Cria o cliente
@@ -48,13 +80,18 @@ class ClienteController extends Controller
     // Atualiza os dados do cliente
     public function update(Request $request, Clientes $cliente)
     {
+        $request->merge([
+            'telefone' => $this->onlyDigits($request->input('telefone')),
+            'cpf' => $this->onlyDigits($request->input('cpf')),
+        ]);
+
         // Validação dos dados
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => ['required', 'email', Rule::unique('clientes', 'email')->ignore($cliente->id)],
-            'telefone' => 'required|string|max:20',
+            'telefone' => 'required|digits_between:10,11',
             'endereco' => 'required|string|max:255',
-            'cpf' => ['required', 'string', 'max:14', Rule::unique('clientes', 'cpf')->ignore($cliente->id)],
+            'cpf' => ['required', 'digits:11', Rule::unique('clientes', 'cpf')->ignore($cliente->id)],
         ]);
 
         // Atualiza o cliente
@@ -70,5 +107,16 @@ class ClienteController extends Controller
     {
         $cliente->delete();
         return redirect()->route('clientes.index')->with('success', 'Cliente excluído com sucesso!');
+    }
+
+    private function onlyDigits(?string $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        $digits = preg_replace('/\D+/', '', $value);
+
+        return $digits !== '' ? $digits : null;
     }
 }

@@ -37,13 +37,13 @@
 
                         <div>
                             <x-input-label for="telefone" :value="__('Telefone')" />
-                            <x-text-input id="telefone" name="telefone" type="text" class="mt-1 block w-full" :value="old('telefone')" />
+                            <x-text-input id="telefone" name="telefone" type="text" class="mt-1 block w-full" :value="old('telefone')" maxlength="15" inputmode="numeric" placeholder="(11) 99999-9999" />
                             <x-input-error class="mt-2" :messages="$errors->get('telefone')" />
                         </div>
 
                         <div>
                             <x-input-label for="cpf" :value="__('CPF')" />
-                            <x-text-input id="cpf" name="cpf" type="text" class="mt-1 block w-full" :value="old('cpf')" />
+                            <x-text-input id="cpf" name="cpf" type="text" class="mt-1 block w-full" :value="old('cpf')" maxlength="14" inputmode="numeric" placeholder="000.000.000-00" />
                             <x-input-error class="mt-2" :messages="$errors->get('cpf')" />
                         </div>
 
@@ -63,4 +63,65 @@
             </div>
         </div>
     </div>
+
+    <script>
+        (function () {
+            const telefone = document.getElementById('telefone');
+            const cpf = document.getElementById('cpf');
+
+            function onlyDigits(value) {
+                return value.replace(/\D/g, '');
+            }
+
+            function formatTelefone(value) {
+                const digits = onlyDigits(value).slice(0, 11);
+
+                if (digits.length <= 2) {
+                    return digits.length ? `(${digits}` : '';
+                }
+
+                if (digits.length <= 6) {
+                    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+                }
+
+                if (digits.length <= 10) {
+                    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+                }
+
+                return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+            }
+
+            function formatCpf(value) {
+                const digits = onlyDigits(value).slice(0, 11);
+
+                if (digits.length <= 3) {
+                    return digits;
+                }
+
+                if (digits.length <= 6) {
+                    return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+                }
+
+                if (digits.length <= 9) {
+                    return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
+                }
+
+                return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
+            }
+
+            if (telefone) {
+                telefone.addEventListener('input', function () {
+                    this.value = formatTelefone(this.value);
+                });
+                telefone.value = formatTelefone(telefone.value);
+            }
+
+            if (cpf) {
+                cpf.addEventListener('input', function () {
+                    this.value = formatCpf(this.value);
+                });
+                cpf.value = formatCpf(cpf.value);
+            }
+        })();
+    </script>
 </x-app-layout>

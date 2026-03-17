@@ -64,7 +64,7 @@
                             <x-input-error class="mt-2" :messages="$errors->get('status')" />
                         </div>
 
-                        <p class="text-sm text-gray-400">* O valor total é calculado automaticamente (quantidade × preço do produto).</p>
+        <p class="text-sm text-gray-400">* O valor total é calculado automaticamente (quantidade &times; preço do produto).</p>
 
                         <div class="flex justify-end">
                             <x-primary-button>{{ __('Salvar Pedido') }}</x-primary-button>
@@ -74,4 +74,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        (function () {
+            const select = document.getElementById('produto_id');
+            const hintBox = document.getElementById('stock-hint');
+            const hintVal = document.getElementById('stock-value');
+            const qtyInput = document.getElementById('quantidade');
+
+            function updateHint() {
+                const opt = select.options[select.selectedIndex];
+                if (!opt || !opt.value) { hintBox.classList.add('hidden'); return; }
+                const stock = parseInt(opt.dataset.stock ?? '0', 10);
+                hintVal.textContent = stock;
+                hintVal.className = stock === 0 ? 'font-semibold text-red-600' : (stock <= 5 ? 'font-semibold text-amber-600' : 'font-semibold text-emerald-700');
+                qtyInput.max = stock;
+                hintBox.classList.remove('hidden');
+            }
+
+            select.addEventListener('change', updateHint);
+            updateHint();
+        })();
+    </script>
 </x-app-layout>

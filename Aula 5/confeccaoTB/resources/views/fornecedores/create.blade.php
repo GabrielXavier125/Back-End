@@ -37,13 +37,13 @@
 
                         <div>
                             <x-input-label for="telefone" :value="__('Telefone')" />
-                            <x-text-input id="telefone" name="telefone" type="text" class="mt-1 block w-full" :value="old('telefone')" />
+                            <x-text-input id="telefone" name="telefone" type="text" class="mt-1 block w-full" :value="old('telefone')" maxlength="15" inputmode="numeric" placeholder="(11) 99999-9999" />
                             <x-input-error class="mt-2" :messages="$errors->get('telefone')" />
                         </div>
 
                         <div>
                             <x-input-label for="cnpj" :value="__('CNPJ')" />
-                            <x-text-input id="cnpj" name="cnpj" type="text" class="mt-1 block w-full" :value="old('cnpj')" required />
+                            <x-text-input id="cnpj" name="cnpj" type="text" class="mt-1 block w-full" :value="old('cnpj')" maxlength="18" inputmode="numeric" placeholder="00.000.000/0000-00" required />
                             <x-input-error class="mt-2" :messages="$errors->get('cnpj')" />
                         </div>
 
@@ -63,4 +63,69 @@
             </div>
         </div>
     </div>
+
+    <script>
+        (function () {
+            const telefone = document.getElementById('telefone');
+            const cnpj = document.getElementById('cnpj');
+
+            function onlyDigits(value) {
+                return value.replace(/\D/g, '');
+            }
+
+            function formatTelefone(value) {
+                const digits = onlyDigits(value).slice(0, 11);
+
+                if (digits.length <= 2) {
+                    return digits.length ? `(${digits}` : '';
+                }
+
+                if (digits.length <= 6) {
+                    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+                }
+
+                if (digits.length <= 10) {
+                    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+                }
+
+                return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+            }
+
+            function formatCnpj(value) {
+                const digits = onlyDigits(value).slice(0, 14);
+
+                if (digits.length <= 2) {
+                    return digits;
+                }
+
+                if (digits.length <= 5) {
+                    return `${digits.slice(0, 2)}.${digits.slice(2)}`;
+                }
+
+                if (digits.length <= 8) {
+                    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5)}`;
+                }
+
+                if (digits.length <= 12) {
+                    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8)}`;
+                }
+
+                return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12)}`;
+            }
+
+            if (telefone) {
+                telefone.addEventListener('input', function () {
+                    this.value = formatTelefone(this.value);
+                });
+                telefone.value = formatTelefone(telefone.value);
+            }
+
+            if (cnpj) {
+                cnpj.addEventListener('input', function () {
+                    this.value = formatCnpj(this.value);
+                });
+                cnpj.value = formatCnpj(cnpj.value);
+            }
+        })();
+    </script>
 </x-app-layout>

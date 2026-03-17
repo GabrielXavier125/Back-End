@@ -6,6 +6,7 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -52,9 +53,9 @@ Route::get('/pedidos/{pedido}/edit', [PedidoController::class, 'edit'])->name('p
 Route::put('/pedidos/{pedido}', [PedidoController::class, 'update'])->name('pedidos.update');
 Route::delete('/pedidos/{pedido}', [PedidoController::class, 'destroy'])->name('pedidos.destroy');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
