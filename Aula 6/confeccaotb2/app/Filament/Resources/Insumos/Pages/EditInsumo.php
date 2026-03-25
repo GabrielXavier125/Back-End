@@ -11,6 +11,11 @@ class EditInsumo extends EditRecord
 {
     protected static string $resource = InsumoResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return static::getResource()::getUrl('index');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

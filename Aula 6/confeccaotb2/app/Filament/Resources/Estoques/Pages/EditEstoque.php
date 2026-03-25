@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Clientes\Pages;
+namespace App\Filament\Resources\Estoques\Pages;
 
-use App\Filament\Resources\Clientes\ClienteResource;
+use App\Filament\Resources\Estoques\EstoqueResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditCliente extends EditRecord
+class EditEstoque extends EditRecord
 {
-    protected static string $resource = ClienteResource::class;
+    protected static string $resource = EstoqueResource::class;
 
     protected function getRedirectUrl(): string
     {

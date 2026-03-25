@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Clientes\Pages;
+namespace App\Filament\Resources\ItemPedidos\Pages;
 
-use App\Filament\Resources\Clientes\ClienteResource;
+use App\Filament\Resources\ItemPedidos\ItemPedidoResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditCliente extends EditRecord
+class EditItemPedido extends EditRecord
 {
-    protected static string $resource = ClienteResource::class;
+    protected static string $resource = ItemPedidoResource::class;
 
     protected function getRedirectUrl(): string
     {
